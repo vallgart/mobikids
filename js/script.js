@@ -1,10 +1,22 @@
-document.addEventListener('DOMContentLoaded', () => {
-  document.querySelectorAll('.faq-question').forEach(q => {
-    q.addEventListener('click', () => {
-      const item   = q.closest('.faq-item');
-      const active = item.classList.contains('active-state');
-      document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('active-state'));
-      if (!active) item.classList.add('active-state');
+// Добавляем интерактивность для копирования кодов/номеров при клике
+    document.querySelectorAll('.interactive-code').forEach(element => {
+        element.addEventListener('click', function() {
+            const textToCopy = this.getAttribute('data-copy');
+            
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                showToast(`Скопировано: ${textToCopy}`);
+            }).catch(err => {
+                console.error('Ошибка копирования: ', err);
+            });
+        });
     });
-  });
-});
+
+    function showToast(message) {
+        const toast = document.getElementById('toast');
+        toast.textContent = message;
+        toast.classList.add('show');
+        
+        setTimeout(() => {
+            toast.classList.remove('show');
+        }, 2000);
+    }
